@@ -46,6 +46,12 @@ async function run() {
       const result = await userCollection.updateOne(filter, updateDoc, options);
       res.json(result);
     });
+    app.get("/users/:email", async (req, res) => {
+      const email = req.params.email;
+      const query = { email: email };
+      const result = await userCollection.findOne(query);
+      res.json(result);
+    });
 
     app.post("/products", async (req, res) => {
       const doc = req.body;
@@ -53,13 +59,6 @@ async function run() {
       console.log(`A document was inserted with the _id: ${result.insertedId}`);
       res.json(result);
     });
-    app.post("/orders", async (req, res) => {
-      const doc = req.body;
-      const result = await orderCollection.insertOne(doc);
-      console.log(`A document was inserted with the _id: ${result.insertedId}`);
-      res.json(result);
-    });
-
     app.get("/products", async (req, res) => {
       const cursor = productCollection.find({});
       const products = await cursor.toArray();
@@ -71,6 +70,21 @@ async function run() {
       const result = await productCollection.findOne(query);
       res.json(result);
     });
+
+    app.delete("/products/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await productCollection.deleteOne(query);
+      res.json(result);
+    })
+
+    app.post("/orders", async (req, res) => {
+      const doc = req.body;
+      const result = await orderCollection.insertOne(doc);
+      console.log(`A document was inserted with the _id: ${result.insertedId}`);
+      res.json(result);
+    });
+
     app.get("/orders", async (req, res) => {
       const cursor = orderCollection.find({});
       const orders = await cursor.toArray();
