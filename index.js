@@ -25,6 +25,7 @@ async function run() {
     const userCollection = database.collection("users");
     const productCollection = database.collection("product");
     const orderCollection = database.collection("order");
+    const reviewCollection = database.collection("reviews");
 
     app.post("/users", async (req, res) => {
       const doc = req.body;
@@ -76,7 +77,7 @@ async function run() {
       const query = { _id: ObjectId(id) };
       const result = await productCollection.deleteOne(query);
       res.json(result);
-    })
+    });
 
     app.post("/orders", async (req, res) => {
       const doc = req.body;
@@ -89,6 +90,13 @@ async function run() {
       const cursor = orderCollection.find({});
       const orders = await cursor.toArray();
       res.json(orders);
+    });
+    app.get("/orders/:userID", async (req, res) => {
+      const userID = req.params.userID;
+      const query = { userID: userID };
+      const cursor = orderCollection.find(query);
+      const orders = await cursor.toArray();
+      res.send(orders);
     });
     app.put("/approveorder/:id", async (req, res) => {
       const id = req.params.id;
@@ -105,6 +113,17 @@ async function run() {
         options
       );
       res.json(result);
+    });
+    app.post("/reviews", async (req, res) => {
+      const doc = req.body;
+      const result = await reviewCollection.insertOne(doc);
+      console.log(`A document was inserted with the _id: ${result.insertedId}`);
+      res.json(result);
+    });
+    app.get("/reviews", async (req, res) => {
+      const cursor = reviewCollection.find({});
+      const products = await cursor.toArray();
+      res.json(products);
     });
   } finally {
     // await client.close();
