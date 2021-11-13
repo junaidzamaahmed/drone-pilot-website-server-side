@@ -26,7 +26,7 @@ Any bank or credit/debit card in the world.
 
 We'll email you about our offers and promos if you subscribe to our newsletter from the footer of our website.
 
-## How can I contact Trip Master?
+## How can I contact Drone Pilot?
 
 You can call us at +880 0188888456 for emergency. We will reply to your email as soon as possible if you leave us your query at dronepilot@drone.com. Kindly check your email regularly after you leave us an email.
 
